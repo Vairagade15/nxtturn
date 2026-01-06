@@ -1,16 +1,21 @@
 version: "3.9"
 
 services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5433:5432"
+
   backend-test:
     build: ./Loopline
     container_name: nxtturn-backend-test
+    command: python manage.py test
     env_file:
       - .env.test
-    ports:
-      - "9000:8000"
-    command: >
-      sh -c "
-      python manage.py test &&
-      daphne -b 0.0.0.0 -p 8000 config.asgi:application
-      "
+    depends_on:
+      - db
 
