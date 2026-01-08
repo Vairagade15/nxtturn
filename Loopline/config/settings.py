@@ -14,18 +14,18 @@ DEBUG = not IS_PRODUCTION
 if not IS_PRODUCTION and not SECRET_KEY:
     SECRET_KEY = "a-dummy-secret-key-for-local-development-only-do-not-use-in-prod"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "34.14.218.46"]
 if IS_PRODUCTION:
     pass
 else:
     ALLOWED_HOSTS.extend(
         [
             "*",
-            "0.0.0.0",
+            "34.14.218.46",
         ]
     )
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "0.0.0.0:5173")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "34.14.218.46:5173")
 
 INSTALLED_APPS = [
     "channels",
@@ -170,7 +170,7 @@ REST_AUTH = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # For local-only frontend development
     "http://127.0.0.1:5173",  # Alternative for local-only
-    "http://0.0.0.0:5173",  # For accessing the frontend from other devices on the network
+    "http://34.14.218.46:5173",  # For accessing the frontend from other devices on the network
 ]
 
 # ==============================================================================
@@ -182,7 +182,7 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://0.0.0.0:5173",
+    "http://34.14.218.46:5173",
 ]
 
 CHANNEL_LAYERS = {
