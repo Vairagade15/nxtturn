@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  backend:
+    image: nxtturn/backend:${IMAGE_TAG}
+    container_name: nxtturn-backend-preprod
+    command: daphne -b 0.0.0.0 -p 8000 config.asgi:application
+    env_file:
+      - .env.preprod
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  frontend:
+    image: nxtturn/frontend:${FRONTEND_TAG}
+    container_name: nxtturn-frontend-preprod
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: nxtturn-db-preprod
+    env_file:
+      - .env.preprod
+    volumes:
+      - preprod_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7
+    container_name: nxtturn-redis-preprod
+    restart: always
+
+volumes:
+  preprod_pgdata:
+

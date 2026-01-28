@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+
   db:
     image: postgres:15
     container_name: postgres_db
@@ -11,13 +12,13 @@ services:
       POSTGRES_PASSWORD: Airtel@123
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+
 
   redis:
     image: redis:7
     container_name: redis
     restart: always
+    
 
   backend:
     build: ./Loopline
@@ -30,16 +31,20 @@ services:
       - redis
     ports:
       - "8000:8000"
+    restart: always
+    volumes:
+      - ./Loopline:/app
 
   frontend:
     build: ./frontend
     container_name: frontend_app
-    env_file:
-      - ./frontend/.env
     depends_on:
       - backend
     ports:
-      - "5173:5173"
+      - "5173:80"   
+    restart: always
 
 volumes:
   postgres_data:
+
+
